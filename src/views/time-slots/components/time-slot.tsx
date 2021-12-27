@@ -8,17 +8,21 @@ dayjs.extend(localizedFormat)
 
 const Container = styled.div`
     padding: 1rem;
+    &:hover {
+        background: red;
+    }
 `
 
 type Props = {
     timeSlot: TTimeSlot
+    onClick: () => void
 }
 
 const TimeSlot = (props: Props) => {
-    const { timeSlot } = props
+    const { timeSlot, onClick } = props
 
     return (
-        <Container>
+        <Container onClick={onClick}>
             {`${timeSlot.formattedStartDate} - ${timeSlot.formattedEndDate}`}
         </Container>
     )

@@ -4,6 +4,7 @@ import dayjs from 'dayjs'
 import localizedFormat from 'dayjs/plugin/localizedFormat'
 import { TCompany } from 'types/ui'
 import TimeSlotGroup from './time-slot-group'
+import CompanySelectedTimeSlot from './company-selected-time-slot'
 
 dayjs.extend(localizedFormat)
 
@@ -12,11 +13,6 @@ const Container = styled.div`
     flex-direction: column;
     background-color: rgba(0,0,0,.20);
     padding: 2rem;
-`
-
-const SelectedTimeSlot = styled.div`
-    padding: 2rem;
-    background-color: rgba(0,0,0,.25);
 `
 
 const Scrollable = styled.div`
@@ -34,11 +30,16 @@ const CompanyTimeSlots = (props: Props) => {
     return (
         <Container>
             {company.name}
-            <SelectedTimeSlot>{'selected timeslot'}</SelectedTimeSlot>
+            <CompanySelectedTimeSlot companyId={company.id} />
             <Scrollable>
                 {
-                    company.timeSlotGroups.map((g, i) =>
-                        <TimeSlotGroup key={`${company.id}-${i}`} group={g} />)
+                    company.timeSlotGroups.map((g, i) => (
+                        <TimeSlotGroup
+                            key={`${company.id}-${i}`}
+                            group={g}
+                            companyId={company.id}
+                        />)
+                    )
                 }
             </Scrollable>
         </Container>
