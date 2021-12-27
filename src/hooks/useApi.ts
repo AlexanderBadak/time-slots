@@ -19,12 +19,19 @@ const useApi = () => {
     })
 
     const createTimeSlotGroups = (timeSlots: TTimeSlotResponse[]) : TTimeSlotGroup[] => {
-        const transformedTimeSlots = timeSlots.map<TTimeSlot>(ts => ({
-            startDate: dayjs(ts.start_time),
-            endDate: dayjs(ts.end_time)
-        }))
+        const transformedTimeSlots = timeSlots.map<TTimeSlot>(ts => {
+            const startDate = dayjs(ts.start_time)
+            const endDate = dayjs(ts.end_time)
 
-        transformedTimeSlots.sort((a, b) => a.endDate.isBefore(b.endDate) ? 1 : -1)
+            return {
+                startDate,
+                endDate,
+                formattedStartDate: startDate.format('LT'),
+                formattedEndDate: endDate.format('LT')
+            }
+        })
+
+        transformedTimeSlots.sort((a, b) => b.endDate.isBefore(a.endDate) ? 1 : -1)
 
         const groups = transformedTimeSlots.reduce<TTimeSlotGroup[]>((acc, curr) => {
             const currentDay = curr.endDate.day()
@@ -34,7 +41,7 @@ const useApi = () => {
                 acc[acc.length - 1].timeSlots.push(curr)
             } else {
                 acc.push({
-                    name: curr.endDate.format('DD'),
+                    name: curr.endDate.format('ddd'),
                     day: currentDay,
                     timeSlots: [curr]
                 })

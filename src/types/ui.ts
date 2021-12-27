@@ -16,4 +16,6 @@ export type TTimeSlotGroup = {
 export type TTimeSlot = {
     startDate: Dayjs
     endDate: Dayjs
+    formattedStartDate: string
+    formattedEndDate: string
 }
