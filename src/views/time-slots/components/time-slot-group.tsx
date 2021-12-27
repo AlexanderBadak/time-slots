@@ -20,11 +20,11 @@ type Props = {
 const TimeSlotGroup = (props: Props) => {
     const { group, companyId } = props
 
-    const { setSelectedTimeSlot } = useContext(TimeSlotsContext)
+    const { selectedTimeSlots, setSelectedTimeSlot } = useContext(TimeSlotsContext)
 
     const selectTimeSlot = (timeSlot: TTimeSlot) => {
         setSelectedTimeSlot && setSelectedTimeSlot({
-            id: companyId,
+            companyId,
             timeSlot
         })
     }
@@ -33,13 +33,25 @@ const TimeSlotGroup = (props: Props) => {
         <Container>
             <GroupName>{group.name}</GroupName>
             {
-                group.timeSlots.map((ts, i) => (
-                    <TimeSlot
-                        key={`${group.day}-${i}`}
-                        timeSlot={ts}
-                        onClick={() => selectTimeSlot(ts)}
-                    />)
-                )
+                group.timeSlots.map((ts, i) => {
+                    //TODO: Refactor
+                    const disabled = selectedTimeSlots && !!selectedTimeSlots.find(sts =>
+                        sts.companyId !== companyId && (
+                            (sts.timeSlot.startDate.isBefore(ts.startDate) && sts.timeSlot.endDate.isAfter(ts.startDate)) ||
+                            (sts.timeSlot.startDate.isBefore(ts.endDate) && !sts.timeSlot.endDate.isBefore(ts.startDate)))
+                    )
+
+                    const selected = selectedTimeSlots && !!selectedTimeSlots.find(sts => sts.timeSlot === ts)
+
+                    return (
+                        <TimeSlot
+                            key={`${group.day}-${i}`}
+                            timeSlot={ts}
+                            disabled={disabled}
+                            selected={selected}
+                            onClick={() => selectTimeSlot(ts)}
+                        />)
+                })
             }
         </Container>
     )

@@ -16,7 +16,7 @@ const CompanySelectedTimeSlot = (props: Props) => {
 
     const { selectedTimeSlots } = useContext(TimeSlotsContext)
 
-    const selectedTimeSlot = selectedTimeSlots?.find(sts => sts.id === companyId)
+    const selectedTimeSlot = selectedTimeSlots?.find(sts => sts.companyId === companyId)
 
     const formatMessage = () : string => {
         if (selectedTimeSlot) {

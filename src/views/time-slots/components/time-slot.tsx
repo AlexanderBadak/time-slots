@@ -6,8 +6,11 @@ import { TTimeSlot } from 'types/ui'
 
 dayjs.extend(localizedFormat)
 
-const Container = styled.div`
+const Container = styled.div<{$disabled?: boolean, selected?: boolean}>`
     padding: 1rem;
+    color: ${p => p.$disabled ? 'white' : 'black'};
+    border: 1px solid ${p => p.selected ? 'purple' : 'transparent'};
+    cursor: ${p => p.$disabled ? 'not-allowed' : 'pointer'};
     &:hover {
         background: red;
     }
@@ -15,14 +18,16 @@ const Container = styled.div`
 
 type Props = {
     timeSlot: TTimeSlot
+    disabled?: boolean
+    selected?: boolean
     onClick: () => void
 }
 
 const TimeSlot = (props: Props) => {
-    const { timeSlot, onClick } = props
+    const { timeSlot, disabled, selected, onClick } = props
 
     return (
-        <Container onClick={onClick}>
+        <Container $disabled={disabled} selected={selected} onClick={() => !disabled && onClick()}>
             {`${timeSlot.formattedStartDate} - ${timeSlot.formattedEndDate}`}
         </Container>
     )

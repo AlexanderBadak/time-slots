@@ -1,6 +1,6 @@
 import { TTimeSlot } from './ui'
 
 export type TSelectedTimeSlot = {
-    id: number
+    companyId: number
     timeSlot: TTimeSlot
 }

@@ -14,7 +14,7 @@ const TimeSlotsProvider = (props: PropsWithChildren<Record<never, never>>) => {
     const setSelectedTimeSlot = (newTimeSlot: TSelectedTimeSlot) => {
         setSelectedTimeSlots(prev => {
             const prevTimeSlots = [...prev]
-            const prevTimeSlot = prevTimeSlots.find(ts => ts.id === newTimeSlot.id)
+            const prevTimeSlot = prevTimeSlots.find(ts => ts.companyId === newTimeSlot.companyId)
 
             if (prevTimeSlot) {
                 prevTimeSlot.timeSlot = newTimeSlot.timeSlot
