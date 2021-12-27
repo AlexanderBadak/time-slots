@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { TCompany } from 'types/api'
+import { TCompany } from 'types/ui'
 import CompanyTimeSlots from './components/company-time-slots'
 
 const ViewContainer = styled.div`

@@ -1,6 +1,6 @@
 import useApi from 'hooks/useApi'
 import React, { useEffect, useState } from 'react'
-import { TCompany } from 'types/api'
+import { TCompany } from 'types/ui'
 import TimeSlotsView from './time-slots-view'
 
 const TimeSlotsContainer = () => {
