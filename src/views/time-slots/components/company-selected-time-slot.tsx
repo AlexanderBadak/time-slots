@@ -6,6 +6,9 @@ const SelectedTimeSlot = styled.div`
     padding: 2rem;
     background-color: rgba(0,0,0,.25);
 `
+const DayName = styled.span`
+
+`
 
 type Props = {
     companyId: number
@@ -26,8 +29,11 @@ const CompanySelectedTimeSlot = (props: Props) => {
         return 'No reservation'
     }
 
+    const dayName = selectedTimeSlot?.timeSlot.startDate.format('ddd') ?? ''
+
     return (
         <SelectedTimeSlot>
+            <DayName>{`${dayName} `}</DayName>
             {formatMessage()}
         </SelectedTimeSlot>
     )
