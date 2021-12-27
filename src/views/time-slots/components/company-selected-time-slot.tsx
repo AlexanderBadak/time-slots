@@ -3,10 +3,15 @@ import styled from 'styled-components'
 import { TimeSlotsContext } from '../time-slots-provider'
 
 const SelectedTimeSlot = styled.div`
+    display: flex;
+    column-gap: 1rem;
     padding: 2rem;
     background-color: rgba(0,0,0,.25);
 `
 const DayName = styled.span`
+
+`
+const RemoveButton = styled.button`
 
 `
 
@@ -17,7 +22,7 @@ type Props = {
 const CompanySelectedTimeSlot = (props: Props) => {
     const { companyId } = props
 
-    const { selectedTimeSlots } = useContext(TimeSlotsContext)
+    const { selectedTimeSlots, deselectTimeSlot } = useContext(TimeSlotsContext)
 
     const selectedTimeSlot = selectedTimeSlots?.find(sts => sts.companyId === companyId)
 
@@ -33,8 +38,9 @@ const CompanySelectedTimeSlot = (props: Props) => {
 
     return (
         <SelectedTimeSlot>
-            <DayName>{`${dayName} `}</DayName>
+            <DayName>{`${dayName}`}</DayName>
             {formatMessage()}
+            <RemoveButton onClick={() => deselectTimeSlot && deselectTimeSlot(companyId)}>{'x'}</RemoveButton>
         </SelectedTimeSlot>
     )
 }
