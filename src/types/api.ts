@@ -1,11 +1,11 @@
-export type TCompany = {
+export type TCompanyResponse = {
     id: number
     name: string
     type: string
-    time_slots: TTimeSlot[]
+    time_slots: TTimeSlotResponse[]
 }
 
-export type TTimeSlot = {
+export type TTimeSlotResponse = {
     start_time: string
     end_time: string
 }

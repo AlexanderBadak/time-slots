@@ -1,11 +1,49 @@
+import dayjs from 'dayjs'
 import React from 'react'
 import { apiService } from 'services/api-service'
-import { TCompany } from 'types/api'
+import { TCompanyResponse, TTimeSlotResponse } from 'types/api'
+import { TCompany, TTimeSlot, TTimeSlotGroup } from 'types/ui'
 
 const useApi = () => {
     const fetchCompanies = async () : Promise<TCompany[]> => {
         const result = await apiService.fetchCompanies()
-        return result.data
+        const companies = result.data.map(r => transformCompanyResponse(r))
+        return companies
+    }
+
+    const transformCompanyResponse = (response: TCompanyResponse) : TCompany => ({
+        id: response.id,
+        name: response.name,
+        type: response.type,
+        timeSlotGroups: createTimeSlotGroups(response.time_slots)
+    })
+
+    const createTimeSlotGroups = (timeSlots: TTimeSlotResponse[]) : TTimeSlotGroup[] => {
+        const transformedTimeSlots = timeSlots.map<TTimeSlot>(ts => ({
+            startDate: dayjs(ts.start_time),
+            endDate: dayjs(ts.end_time)
+        }))
+
+        transformedTimeSlots.sort((a, b) => a.endDate.isBefore(b.endDate) ? 1 : -1)
+
+        const groups = transformedTimeSlots.reduce<TTimeSlotGroup[]>((acc, curr) => {
+            const currentDay = curr.endDate.day()
+            const isSameGroup = acc.length > 0 && acc[acc.length - 1].day === currentDay
+
+            if (isSameGroup) {
+                acc[acc.length - 1].timeSlots.push(curr)
+            } else {
+                acc.push({
+                    name: curr.endDate.format('DD'),
+                    day: currentDay,
+                    timeSlots: [curr]
+                })
+            }
+
+            return acc
+        }, [])
+
+        return groups
     }
 
     return {
