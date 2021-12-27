@@ -38,11 +38,10 @@ const TimeSlotGroup = (props: Props) => {
             <GroupName>{group.name}</GroupName>
             {
                 group.timeSlots.map((ts, i) => {
-                    //TODO: Refactor
                     const disabled = selectedTimeSlots && !!selectedTimeSlots.find(sts =>
                         sts.companyId !== companyId && (
                             (sts.timeSlot.startDate.isBefore(ts.startDate) && sts.timeSlot.endDate.isAfter(ts.startDate)) ||
-                            (sts.timeSlot.startDate.isBefore(ts.endDate) && !sts.timeSlot.endDate.isBefore(ts.startDate)))
+                            (sts.timeSlot.startDate.isBefore(ts.endDate) && sts.timeSlot.endDate.isAfter(ts.startDate)))
                     )
 
                     const selected = selectedTimeSlots && !!selectedTimeSlots.find(sts => sts.timeSlot === ts)

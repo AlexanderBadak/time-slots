@@ -7,7 +7,8 @@ const ViewContainer = styled.div`
     
 `
 const Headline = styled.h1`
-
+    padding-left: 2rem;
+    color: ${p => p.theme.colors.primary};
 `
 const CompanyListContainer = styled.div`
     display: flex;

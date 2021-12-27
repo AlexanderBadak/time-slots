@@ -12,7 +12,7 @@ const DayName = styled.span`
 
 `
 const RemoveButton = styled.button`
-
+    margin-left: auto;
 `
 
 type Props = {
@@ -40,7 +40,10 @@ const CompanySelectedTimeSlot = (props: Props) => {
         <SelectedTimeSlot>
             <DayName>{`${dayName}`}</DayName>
             {formatMessage()}
-            <RemoveButton onClick={() => deselectTimeSlot && deselectTimeSlot(companyId)}>{'x'}</RemoveButton>
+            {
+                selectedTimeSlot &&
+                <RemoveButton onClick={() => deselectTimeSlot && deselectTimeSlot(companyId)}>{'x'}</RemoveButton>
+            }
         </SelectedTimeSlot>
     )
 }
