@@ -20,13 +20,17 @@ type Props = {
 const TimeSlotGroup = (props: Props) => {
     const { group, companyId } = props
 
-    const { selectedTimeSlots, setSelectedTimeSlot } = useContext(TimeSlotsContext)
+    const { selectedTimeSlots, setSelectedTimeSlot, deselectTimeSlot } = useContext(TimeSlotsContext)
 
-    const selectTimeSlot = (timeSlot: TTimeSlot) => {
-        setSelectedTimeSlot && setSelectedTimeSlot({
-            companyId,
-            timeSlot
-        })
+    const selectTimeSlot = (timeSlot: TTimeSlot, selected: boolean) => {
+        if (selected) {
+            deselectTimeSlot && deselectTimeSlot(companyId)
+        } else {
+            setSelectedTimeSlot && setSelectedTimeSlot({
+                companyId,
+                timeSlot
+            })
+        }
     }
 
     return (
@@ -49,7 +53,7 @@ const TimeSlotGroup = (props: Props) => {
                             timeSlot={ts}
                             disabled={disabled}
                             selected={selected}
-                            onClick={() => selectTimeSlot(ts)}
+                            onClick={() => selectTimeSlot(ts, !!selected)}
                         />)
                 })
             }
