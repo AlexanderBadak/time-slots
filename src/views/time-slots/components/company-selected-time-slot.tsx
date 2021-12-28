@@ -1,3 +1,4 @@
+import { ETimeSlotActions } from 'enums/actions'
 import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { TimeSlotsContext } from '../time-slots-provider'
@@ -23,9 +24,13 @@ const CompanySelectedTimeSlot = (props: Props) => {
     const { companyId } = props
     console.log('CompanySelectedTimeSlot ' + companyId)
 
-    const { selectedTimeSlots, deselectTimeSlot } = useContext(TimeSlotsContext)
+    const { state, dispatch } = useContext(TimeSlotsContext)
 
-    const selectedTimeSlot = selectedTimeSlots!.find(sts => sts.companyId === companyId)
+    const selectedTimeSlot = state!.selectedTimeSlots.find(sts => sts.companyId === companyId)
+
+    const onRemoveClick = () => {
+        dispatch!({type: ETimeSlotActions.deselect, payload: {companyId}})
+    }
 
     const formatMessage = () : string => {
         if (selectedTimeSlot) {
@@ -43,7 +48,7 @@ const CompanySelectedTimeSlot = (props: Props) => {
             {formatMessage()}
             {
                 selectedTimeSlot &&
-                <RemoveButton onClick={() => deselectTimeSlot!(companyId)}>{'x'}</RemoveButton>
+                <RemoveButton onClick={onRemoveClick}>{'x'}</RemoveButton>
             }
         </SelectedTimeSlot>
     )

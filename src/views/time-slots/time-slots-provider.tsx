@@ -1,49 +1,63 @@
-import React, { createContext, PropsWithChildren, useCallback, useState } from 'react'
+import { ETimeSlotActions } from 'enums/actions'
+import React, { createContext, Dispatch, PropsWithChildren, useReducer } from 'react'
 import { TSelectedTimeSlot } from 'types/logic'
 
-interface ITimeSlots {
-    selectedTimeSlots: TSelectedTimeSlot[]
-    setSelectedTimeSlot: (timeSlot: TSelectedTimeSlot) => void
-    deselectTimeSlot: (companyId: number) => void
+interface ITimeSlotsContext {
+    state: State
+    dispatch: Dispatch<Action>
 }
 
-export const TimeSlotsContext = createContext<Partial<ITimeSlots>>({})
+export const TimeSlotsContext = createContext<Partial<ITimeSlotsContext>>({})
 
-const TimeSlotsProvider = (props: PropsWithChildren<Record<never, never>>) => {
-    const [selectedTimeSlots, setSelectedTimeSlots] = useState<TSelectedTimeSlot[]>([])
+type State = {
+    selectedTimeSlots: TSelectedTimeSlot[]
+}
 
-    const setSelectedTimeSlot = useCallback((newTimeSlot: TSelectedTimeSlot) => {
-        setSelectedTimeSlots(prev => {
-            const timeSlots = [...prev]
-            const prevTimeSlot = timeSlots.find(ts => ts.companyId === newTimeSlot.companyId)
+type Action = { type: ETimeSlotActions.select, payload: {timeSlot: TSelectedTimeSlot} } | { type: ETimeSlotActions.deselect, payload: {companyId: number}}
 
-            if (prevTimeSlot) {
-                prevTimeSlot.timeSlot = newTimeSlot.timeSlot
-                return timeSlots
-            }
+const timeSlotReducer = (state: State, action: Action) : State => {
+    switch (action.type) {
+        case ETimeSlotActions.select:
+            return selectTimeSlotAction(state, action.payload.timeSlot)
+        case ETimeSlotActions.deselect:
+            return deselectTimeSlotAction(state, action.payload.companyId)
 
-            timeSlots.push(newTimeSlot)
-            return timeSlots
-        })
-    }, [])
+        default:
+            throw new Error('Invalid action')
+    }
+}
+const selectTimeSlotAction = (state: State, timeSlot: TSelectedTimeSlot) : State => {
+    const selectedTimeSlots = [...state.selectedTimeSlots]
+    const prevTimeSlot = selectedTimeSlots.find(ts => ts.companyId === timeSlot.companyId)
 
-    const deselectTimeSlot = useCallback((companyId: number) => {
-        setSelectedTimeSlots(prev => {
-            let timeSlots = [...prev]
-            timeSlots = timeSlots.filter(ts => ts.companyId !== companyId)
-
-            return timeSlots
-        })
-    }, [])
-
-    const providerBag: ITimeSlots = {
-        selectedTimeSlots,
-        setSelectedTimeSlot,
-        deselectTimeSlot
+    if (prevTimeSlot) {
+        prevTimeSlot.timeSlot = timeSlot.timeSlot
+        return {
+            selectedTimeSlots
+        }
     }
 
+    selectedTimeSlots.push(timeSlot)
+
+    return {
+        selectedTimeSlots
+    }
+}
+
+const deselectTimeSlotAction = (state: State, companyId: number) : State => {
+    let selectedTimeSlots = [...state.selectedTimeSlots]
+    selectedTimeSlots = selectedTimeSlots.filter(ts => ts.companyId !== companyId)
+
+    return {
+        selectedTimeSlots
+    }
+}
+
+const TimeSlotsProvider = (props: PropsWithChildren<Record<never, never>>) => {
+    const [state, dispatch] = useReducer(timeSlotReducer, {selectedTimeSlots: []})
+
     return (
-        <TimeSlotsContext.Provider value={providerBag}>
+        <TimeSlotsContext.Provider value={{state, dispatch}}>
             {props.children}
         </TimeSlotsContext.Provider>
     )

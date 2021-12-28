@@ -1,3 +1,4 @@
+import { ETimeSlotActions } from 'enums/actions'
 import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { TTimeSlot, TTimeSlotGroup } from 'types/ui'
@@ -23,16 +24,19 @@ const TimeSlotGroup = (props: Props) => {
 
     console.log('TimeSlotGroup ' + companyId)
 
-    const { selectedTimeSlots, setSelectedTimeSlot, deselectTimeSlot } = useContext(TimeSlotsContext)
+    const { state, dispatch } = useContext(TimeSlotsContext)
 
     const selectTimeSlot = (timeSlot: TTimeSlot, selected: boolean) => {
         if (selected) {
-            deselectTimeSlot!(companyId)
+            dispatch!({type: ETimeSlotActions.deselect, payload: {
+                companyId
+            }})
         } else {
-            setSelectedTimeSlot!({
-                companyId,
-                timeSlot
-            })
+            dispatch!({type: ETimeSlotActions.select, payload: {
+                timeSlot: {
+                    timeSlot, companyId
+                }
+            }})
         }
     }
 
@@ -43,13 +47,13 @@ const TimeSlotGroup = (props: Props) => {
             </GroupName>
             {
                 group.timeSlots.map((ts, i) => {
-                    const disabled = selectedTimeSlots && !!selectedTimeSlots.find(sts =>
+                    const disabled = !!state!.selectedTimeSlots.find(sts =>
                         sts.companyId !== companyId && (
                             (sts.timeSlot.startDate.isBefore(ts.startDate) && sts.timeSlot.endDate.isAfter(ts.startDate)) ||
                             (sts.timeSlot.startDate.isBefore(ts.endDate) && sts.timeSlot.endDate.isAfter(ts.startDate)))
                     )
 
-                    const selected = selectedTimeSlots && !!selectedTimeSlots.find(sts => sts.timeSlot === ts)
+                    const selected = !!state!.selectedTimeSlots.find(sts => sts.timeSlot === ts)
 
                     return (
                         <TimeSlot
