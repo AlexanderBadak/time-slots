@@ -19,7 +19,7 @@ npm or yarn install
 ```
 npm start or yarn run
 ```
-## Chaning the REST API
+## Changing the REST API
 
 * open file src/services/api-service.ts
 * replace the host parameter in the instantiation (line 15)
