@@ -5,11 +5,12 @@ import { TimeSlotsContext } from '../time-slots-provider'
 import TimeSlot from './time-slot'
 
 const Container = styled.div`
-    padding: 1rem;
+    padding: .5rem 1rem 0rem 1rem;
     background-color: rgba(0,0,0,.35);
 `
-const GroupName = styled.h2`
-
+const GroupName = styled.h3`
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 `
 
 type Props = {
@@ -20,13 +21,15 @@ type Props = {
 const TimeSlotGroup = (props: Props) => {
     const { group, companyId } = props
 
+    console.log('TimeSlotGroup ' + companyId)
+
     const { selectedTimeSlots, setSelectedTimeSlot, deselectTimeSlot } = useContext(TimeSlotsContext)
 
     const selectTimeSlot = (timeSlot: TTimeSlot, selected: boolean) => {
         if (selected) {
-            deselectTimeSlot && deselectTimeSlot(companyId)
+            deselectTimeSlot!(companyId)
         } else {
-            setSelectedTimeSlot && setSelectedTimeSlot({
+            setSelectedTimeSlot!({
                 companyId,
                 timeSlot
             })
@@ -35,7 +38,9 @@ const TimeSlotGroup = (props: Props) => {
 
     return (
         <Container>
-            <GroupName>{group.name}</GroupName>
+            <GroupName>
+                {group.name}
+            </GroupName>
             {
                 group.timeSlots.map((ts, i) => {
                     const disabled = selectedTimeSlots && !!selectedTimeSlots.find(sts =>

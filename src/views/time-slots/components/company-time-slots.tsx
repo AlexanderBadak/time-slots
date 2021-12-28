@@ -13,10 +13,10 @@ const Container = styled.div`
     flex-direction: column;
     background-color: rgba(0,0,0,.20);
     padding: 2rem;
-    width: 12%;
+    width: 20rem;
     border-radius: ${p => p.theme.borderRadius.default};
 `
-const CompanyName = styled.h3`
+const CompanyName = styled.h2`
 
 `
 const Scrollable = styled.div`

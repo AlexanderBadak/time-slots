@@ -41,7 +41,7 @@ const useApi = () => {
                 acc[acc.length - 1].timeSlots.push(curr)
             } else {
                 acc.push({
-                    name: curr.endDate.format('ddd'),
+                    name: curr.endDate.format('dddd'),
                     day: currentDay,
                     timeSlots: [curr]
                 })
