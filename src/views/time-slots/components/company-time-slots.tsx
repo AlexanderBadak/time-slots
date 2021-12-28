@@ -11,17 +11,24 @@ dayjs.extend(localizedFormat)
 const Container = styled.div`
     display: flex;
     flex-direction: column;
-    background-color: rgba(0,0,0,.20);
+    background-color: rgba(0,0,0,.05);
     padding: 2rem;
-    width: 20rem;
+    width: 25rem;
+    row-gap: 1rem;
     border-radius: ${p => p.theme.borderRadius.default};
 `
 const CompanyName = styled.h2`
-
+    color: ${p => p.theme.colors.black};
 `
+
 const Scrollable = styled.div`
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    text-align: center;
     overflow: auto;
-    height: 70vh;
+    height: 60vh;
+    border-radius: ${p => p.theme.borderRadius.default};
 `
 
 type Props = {

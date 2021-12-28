@@ -1,3 +1,4 @@
+import RemoveIcon from 'components/remove-icon'
 import { ETimeSlotActions } from 'enums/actions'
 import React, { useContext } from 'react'
 import styled from 'styled-components'
@@ -7,13 +8,25 @@ const SelectedTimeSlot = styled.div`
     display: flex;
     column-gap: 1rem;
     padding: 2rem;
-    background-color: rgba(0,0,0,.25);
+    height: 3rem;
+    background-color: ${p => p.theme.colors.black};
+    color: ${p => p.theme.colors.secondary};
+    font-size: 1.15em;
+    border-radius: ${p => p.theme.borderRadius.default};
+    align-items: center;
+    font-weight: 600;
 `
-const DayName = styled.span`
+const DayName = styled.span``
 
-`
-const RemoveButton = styled.button`
+const RemoveButton = styled.div`
+    display: grid;
+    place-items: center;
     margin-left: auto;
+    cursor: pointer;
+
+    & > svg {
+        stroke: ${p => p.theme.colors.secondary};
+    }
 `
 
 type Props = {
@@ -47,7 +60,9 @@ const CompanySelectedTimeSlot = (props: Props) => {
             {formatMessage()}
             {
                 selectedTimeSlot &&
-                <RemoveButton onClick={onRemoveClick}>{'x'}</RemoveButton>
+                <RemoveButton onClick={onRemoveClick}>
+                    <RemoveIcon />
+                </RemoveButton>
             }
         </SelectedTimeSlot>
     )

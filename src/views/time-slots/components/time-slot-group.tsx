@@ -6,8 +6,9 @@ import { TimeSlotsContext } from '../time-slots-provider'
 import TimeSlot from './time-slot'
 
 const Container = styled.div`
-    padding: .5rem 1rem 0rem 1rem;
-    background-color: rgba(0,0,0,.35);
+    padding: .5rem 1rem 1rem 1rem;
+    background-color: ${p => p.theme.colors.white};
+    border-radius: ${p => p.theme.borderRadius.default};
 `
 const GroupName = styled.h3`
     margin-top: 1rem;

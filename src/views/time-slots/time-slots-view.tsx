@@ -13,7 +13,7 @@ const Headline = styled.h1`
 const CompanyListContainer = styled.div`
     display: flex;
     column-gap: 5rem;
-    background-color: rgba(0,0,0,.15);
+    background-color: #bfbfbf26;
     padding: 2rem;
 `
 

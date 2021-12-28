@@ -1,18 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
-import dayjs from 'dayjs'
-import localizedFormat from 'dayjs/plugin/localizedFormat'
 import { TTimeSlot } from 'types/ui'
-
-dayjs.extend(localizedFormat)
 
 const Container = styled.div<{$disabled?: boolean, selected?: boolean}>`
     padding: 1rem;
-    color: ${p => p.$disabled ? 'white' : 'black'};
-    border: 1px solid ${p => p.selected ? 'purple' : 'transparent'};
-    cursor: ${p => p.$disabled ? 'not-allowed' : 'pointer'};
+    color: ${p => p.$disabled ? p.theme.colors.grey : p.theme.colors.black};
+    border: .2rem solid ${p => p.selected ? p.theme.colors.secondary : 'transparent'};
+    cursor: pointer;
+    pointer-events: ${p => p.$disabled ? 'none' : 'auto'};
+    border-radius: ${p => p.theme.borderRadius.default};
+
     &:hover {
-        background: red;
+        transition: background .2s ease;
+        background: rgba(252, 186, 3, .25);
     }
 `
 
