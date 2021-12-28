@@ -1,4 +1,4 @@
-import React, { createContext, PropsWithChildren, useState } from 'react'
+import React, { createContext, PropsWithChildren, useCallback, useState } from 'react'
 import { TSelectedTimeSlot } from 'types/logic'
 
 interface ITimeSlots {
@@ -12,7 +12,7 @@ export const TimeSlotsContext = createContext<Partial<ITimeSlots>>({})
 const TimeSlotsProvider = (props: PropsWithChildren<Record<never, never>>) => {
     const [selectedTimeSlots, setSelectedTimeSlots] = useState<TSelectedTimeSlot[]>([])
 
-    const setSelectedTimeSlot = (newTimeSlot: TSelectedTimeSlot) => {
+    const setSelectedTimeSlot = useCallback((newTimeSlot: TSelectedTimeSlot) => {
         setSelectedTimeSlots(prev => {
             const timeSlots = [...prev]
             const prevTimeSlot = timeSlots.find(ts => ts.companyId === newTimeSlot.companyId)
@@ -25,16 +25,16 @@ const TimeSlotsProvider = (props: PropsWithChildren<Record<never, never>>) => {
             timeSlots.push(newTimeSlot)
             return timeSlots
         })
-    }
+    }, [])
 
-    const deselectTimeSlot = (companyId: number) => {
+    const deselectTimeSlot = useCallback((companyId: number) => {
         setSelectedTimeSlots(prev => {
             let timeSlots = [...prev]
             timeSlots = timeSlots.filter(ts => ts.companyId !== companyId)
 
             return timeSlots
         })
-    }
+    }, [])
 
     const providerBag: ITimeSlots = {
         selectedTimeSlots,

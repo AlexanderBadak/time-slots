@@ -21,10 +21,11 @@ type Props = {
 
 const CompanySelectedTimeSlot = (props: Props) => {
     const { companyId } = props
+    console.log('CompanySelectedTimeSlot ' + companyId)
 
     const { selectedTimeSlots, deselectTimeSlot } = useContext(TimeSlotsContext)
 
-    const selectedTimeSlot = selectedTimeSlots?.find(sts => sts.companyId === companyId)
+    const selectedTimeSlot = selectedTimeSlots!.find(sts => sts.companyId === companyId)
 
     const formatMessage = () : string => {
         if (selectedTimeSlot) {
@@ -42,7 +43,7 @@ const CompanySelectedTimeSlot = (props: Props) => {
             {formatMessage()}
             {
                 selectedTimeSlot &&
-                <RemoveButton onClick={() => deselectTimeSlot && deselectTimeSlot(companyId)}>{'x'}</RemoveButton>
+                <RemoveButton onClick={() => deselectTimeSlot!(companyId)}>{'x'}</RemoveButton>
             }
         </SelectedTimeSlot>
     )
