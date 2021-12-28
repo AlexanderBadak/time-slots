@@ -22,8 +22,6 @@ type Props = {
 const TimeSlotGroup = (props: Props) => {
     const { group, companyId } = props
 
-    console.log('TimeSlotGroup ' + companyId)
-
     const { state, dispatch } = useContext(TimeSlotsContext)
 
     const selectTimeSlot = (timeSlot: TTimeSlot, selected: boolean) => {
