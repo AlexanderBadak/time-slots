@@ -70,6 +70,7 @@
         }
       }],
       "testing-library/await-async-query": "off",
-      "testing-library/no-await-sync-query": "error"
+      "testing-library/no-await-sync-query": "error",
+      "testing-library/no-unnecessary-act": "off"
     }
 }

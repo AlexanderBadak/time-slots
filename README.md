@@ -1,6 +1,7 @@
 # Company Time Slots
 
 A tiny app to improve time slot reservation making.
+For the sake of scope,  I did not implement a error catching layer for graceful error throwing in case the API does not work.
 
 ## Getting Started
 
@@ -30,3 +31,4 @@ export const apiService = new ApiService('YOUR HOST HERE')
 ```
 await this.httpClient.get<TCompanyResponse[]>('YOUR URL QUERY DIRECTORY')
 ```
+* for an example provider visit https://mocki.io/fake-json-api
