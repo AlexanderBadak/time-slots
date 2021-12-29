@@ -53,8 +53,8 @@ const deselectTimeSlotAction = (state: State, companyId: number) : State => {
     }
 }
 
-const TimeSlotsProvider = (props: PropsWithChildren<Record<never, never>>) => {
-    const [state, dispatch] = useReducer(timeSlotReducer, {selectedTimeSlots: []})
+const TimeSlotsProvider = (props: PropsWithChildren<{selectedTimeSlots: TSelectedTimeSlot[]}>) => {
+    const [state, dispatch] = useReducer(timeSlotReducer, {selectedTimeSlots: props.selectedTimeSlots})
 
     return (
         <TimeSlotsContext.Provider value={{state, dispatch}}>

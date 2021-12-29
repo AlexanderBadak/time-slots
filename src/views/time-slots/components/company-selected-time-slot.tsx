@@ -18,11 +18,14 @@ const SelectedTimeSlot = styled.div`
 `
 const DayName = styled.span``
 
-const RemoveButton = styled.div`
+const RemoveButton = styled.button`
     display: grid;
     place-items: center;
     margin-left: auto;
     cursor: pointer;
+    background: transparent;
+    border: none;
+    outline: 0;
 
     & > svg {
         stroke: ${p => p.theme.colors.secondary};

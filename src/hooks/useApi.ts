@@ -3,12 +3,14 @@ import React from 'react'
 import { apiService } from 'services/api-service'
 import { TCompanyResponse, TTimeSlotResponse } from 'types/api'
 import { TCompany, TTimeSlot, TTimeSlotGroup } from 'types/ui'
+import localizedFormat from 'dayjs/plugin/localizedFormat'
 
-const useApi = () => {
+dayjs.extend(localizedFormat)
+
+export const useApi = () => {
     const fetchCompanies = async () : Promise<TCompany[]> => {
         const result = await apiService.fetchCompanies()
-        const companies = result.data.map(r => transformCompanyResponse(r))
-        return companies
+        return result.data.map(r => transformCompanyResponse(r))
     }
 
     const transformCompanyResponse = (response: TCompanyResponse) : TCompany => ({
@@ -57,5 +59,3 @@ const useApi = () => {
         fetchCompanies
     }
 }
-
-export default useApi

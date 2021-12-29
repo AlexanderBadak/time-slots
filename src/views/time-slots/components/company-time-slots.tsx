@@ -1,12 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import dayjs from 'dayjs'
-import localizedFormat from 'dayjs/plugin/localizedFormat'
 import { TCompany } from 'types/ui'
 import TimeSlotGroup from './time-slot-group'
 import CompanySelectedTimeSlot from './company-selected-time-slot'
-
-dayjs.extend(localizedFormat)
 
 const Container = styled.div`
     display: flex;

@@ -1,4 +1,4 @@
-import useApi from 'hooks/useApi'
+import { useApi } from 'hooks/useApi'
 import React, { useEffect, useState } from 'react'
 import { TCompany } from 'types/ui'
 import TimeSlotsProvider from './time-slots-provider'
@@ -19,7 +19,7 @@ const TimeSlotsContainer = () => {
     }, [])
 
     return (
-        <TimeSlotsProvider>
+        <TimeSlotsProvider selectedTimeSlots={[]}>
             <TimeSlotsView companies={companies} />
         </TimeSlotsProvider>
     )

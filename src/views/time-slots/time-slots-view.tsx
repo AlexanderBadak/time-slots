@@ -29,7 +29,7 @@ const TimeSlotsView = (props: Props) => {
             <Headline>{'Company Time Slots'}</Headline>
             <CompanyListContainer>
                 {
-                    companies.map(c => <CompanyTimeSlots key={c.id} company={c} />)
+                    companies.map(c => <CompanyTimeSlots key={`company-${c.id}`} company={c} />)
                 }
             </CompanyListContainer>
 
